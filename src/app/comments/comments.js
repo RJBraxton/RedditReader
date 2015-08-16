@@ -14,17 +14,16 @@ angular.module( 'ngBoilerplate.comments', [
         templateUrl: 'comments/comments.tpl.html'
       }
     },
-    data:{ pageTitle: 'What is It?' }
+    data:{}
   });
 })
 
-.controller( 'CommentsCtrl', function CommentsCtrl( $scope, $stateParams, redditQuery ) {
-  // This is simple a demo for UI Boostrap.
-  // $scope.s = redditQuery.test();
+.controller( 'CommentsCtrl', function CommentsCtrl( $scope, $stateParams, redditQuery, $rootScope) {
   redditQuery.searchComments($stateParams.subreddit, $stateParams.articleID).then(function(res) {
-    $scope.comments = redditQuery.processComments(res);
-    console.log($scope.comments);
-  });
-  
+    $scope.comments = res.comments;
+    $scope.post = res.post;
+    $rootScope.pageTitle = res.post.title + " | RedditReader";  
+    console.log(res);
+  });  
 
 });

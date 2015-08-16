@@ -14,20 +14,19 @@ angular.module( 'ngBoilerplate.feed', [
         templateUrl: 'feed/feed.tpl.html'
       }
     },
-    data:{ pageTitle: 'What is It?' }
+    data:{}
   });
 })
 
-.controller( 'FeedCtrl', function FeedCtrl( $scope,  $stateParams, redditQuery ) {
+.controller( 'FeedCtrl', function FeedCtrl( $scope,  $stateParams, redditQuery, $rootScope ) {
+  $rootScope.pageTitle = "/r/" + $stateParams.subreddit + " | RedditReader";
+
   $scope.subreddit = $stateParams.subreddit;
   
 
   $scope.subreddit = $stateParams.subreddit;
     redditQuery.searchLinks($scope.subreddit).then(function(res) {
-      console.log(res);
-      $scope.posts = res.data.data.children;
+      $scope.posts = res;
       // console.log(res);
-    }, function(data) {
-      alert('Subreddit not found.');
     });
 });

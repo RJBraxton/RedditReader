@@ -1,19 +1,27 @@
 <div class="row">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<img class="feed-img" align="left" ng-src="{{post.preview.images[0].source.url}}">
+			<h4>{{post.title}}<small> Submitted by <a ui-sref="user({username: post.author})">{{post.author}}</a></small></h4>
+		</div>
+	</div>
+</div>
+<div class="row">
 	<div class="panel panel-default" ng-repeat="comment in comments">
 		<div class="panel-body">
-			<p>> {{comment.author}}</p>
+			<p><span class="label" ng-class="{'label-danger': comment.score < 0, 'label-primary': comment.score > 0, 'label-default': comment.score == 0}">{{comment.score}}</span> <a ui-sref="user({username:comment.author})">{{comment.author}}</a></p>
 			{{comment.body}}
 			<div class="panel panel-default" ng-repeat="child1 in comment.children">
 				<div class="panel-body">
-				<p>> {{child1.author}}</p>
+				<p><span class="label" ng-class="{'label-danger': child1.score < 0, 'label-primary': child1.score > 0, 'label-default': child1.score == 0}">{{child1.score}}</span> <a ui-sref="user({username:child1.author})">{{child1.author}}</a></p>
 					{{child1.body}}
 					<div class="panel panel-default" ng-repeat="child2 in child1.children">
 						<div class="panel-body">
-						<p>> {{child2.author}}</p>
+						<p><span class="label" ng-class="{'label-danger': child2.score < 0, 'label-primary': child2.score > 0, 'label-default': child2.score == 0}">{{child2.score}}</span> <a ui-sref="user({username:child2.author})">{{child2.author}}</a></p>
 							{{child2.body}}
 							<div class="panel panel-default" ng-repeat="child3 in child2.children">
 								<div class="panel-body">
-								<p>> {{child3.author}}</p>
+								<p><span class="label" ng-class="{'label-danger': child3.score < 0, 'label-primary': child3.score > 0, 'label-default': child3.score == 0}">{{child3.score}}</span> <a ui-sref="user({username:child3.author})">{{child3.author}}</a></p>
 									{{child3.body}}
 								</div>
 							</div>
