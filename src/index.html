@@ -61,27 +61,15 @@
               </a>
             </li>
             <li ui-sref-active="active">
-              <a href ui-sref="about">
+              <a href ui-sref="feed({subreddit: 'pics'})">
                 <i class="fa fa-info-circle"></i>
-                What is it?
+                Feed
               </a>
             </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp#readme">
-                <i class="fa fa-book"></i>
-                Read the Docs
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp">
-                <i class="fa fa-github-alt"></i>
-                Github
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp/issues">
-                <i class="fa fa-comments"></i>
-                Support
+            <li ui-sref-active="active">
+              <a href ui-sref="comments">
+                <i class="fa fa-info-circle"></i>
+                Comments
               </a>
             </li>
           </ul>
@@ -117,5 +105,6 @@
         </div>
       </div>
     </footer>
+    <script src="http://localhost:35729/livereload.js"></script>
   </body>
 </html>

@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="panel panel-default" ng-repeat="comment in comments">
+		<div class="panel-body">
+			<p>> {{comment.author}}</p>
+			{{comment.body}}
+			<div class="panel panel-default" ng-repeat="child1 in comment.children">
+				<div class="panel-body">
+				<p>> {{child1.author}}</p>
+					{{child1.body}}
+					<div class="panel panel-default" ng-repeat="child2 in child1.children">
+						<div class="panel-body">
+						<p>> {{child2.author}}</p>
+							{{child2.body}}
+							<div class="panel panel-default" ng-repeat="child3 in child2.children">
+								<div class="panel-body">
+								<p>> {{child3.author}}</p>
+									{{child3.body}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

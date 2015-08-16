@@ -1,0 +1,18 @@
+<div class="row">
+  <h1>{{userAbout.name}} <small>Member since {{userAbout.created_utc}}</small></h1>  
+  <p>Comment Karma: {{userAbout.comment_karma}}</p>
+  <p>Link Karma: {{userAbout.link_karma}}</p>
+
+  <div class="panel panel-default" ng-repeat="post in userOverview">
+
+      <div ng-if="post.data.body" class="panel-heading">
+
+<span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.link_id.slice(3)})">{{post.data.link_title}}</a></div>
+      <div ng-if="post.data.body" class="panel-body">
+        <p>{{post.data.body}}</p>
+      </div>
+    <div ng-if="!post.data.body">
+      <div class="panel-body"><a ng-href="{{post.data.url}}">{{post.data.title}}</a></div>
+    </div>
+  </div>
+</div>
