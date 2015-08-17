@@ -1,17 +1,37 @@
-<div class="row">
-  <h1>{{userAbout.name}} <small>Member since {{userAbout.created}}</small></h1>  
-  <p>Comment Karma: {{userAbout.comment_karma}} - Link Karma: {{userAbout.link_karma}}</p>
+<div class="row" ng-show="loading">
+  <div class="text-center">
+    <h1><i class="fa fa-spinner fa-5x fa-spin"></i></h1>
+  </div>
+</div>
 
-  <div class="panel panel-default" ng-repeat="post in userOverview">
+<div class="row" ng-show="!loading">
+<h1>{{userAbout.name}} <small>Member since {{userAbout.createdSince}}</small></h1> 
+  <div class="col-md-2">
+    <div class="well">
+    <p>Comment Karma: {{userAbout.comment_karma}}</p>
+      <p>Link Karma: {{userAbout.link_karma}}</p>
+      <p>Registered: {{userAbout.createdDate}}</p>
+      <p ng-if="userAbout.has_verified_email"><i class="fa text-success fa-check-circle"></i> Email verified</p>
+      <p ng-if="userAbout.is_gold"><i class="fa fa-star text-warning"></i>Reddit Gold</p>
+    </div>
+  </div>
+  <div class="col-md-10">
+     
+
+    <div class="panel panel-default" ng-repeat="post in userOverview">
 
       <div ng-if="post.data.body" class="panel-heading">
-
-<span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.link_id.slice(3)})">{{post.data.link_title}}</a></div>
+        <h4>
+          <span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.link_id.slice(3)})">{{post.data.link_title}}</a><small> /r/{{post.data.subreddit}} {{moment.unix(post.data.created).fromNow()}}</small>
+        </h4>
+      </div>
       <div ng-if="post.data.body" class="panel-body">
         <p>{{post.data.body}}</p>
       </div>
-    <div ng-if="!post.data.body">
-      <div class="panel-body"><span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ng-href="{{post.data.url}}">{{post.data.title}}</a></div>
+      <div ng-if="!post.data.body">
+        <div class="panel-body"><span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ng-href="{{post.data.url}}">{{post.data.title}}</a></div>
+      </div>
     </div>
   </div>
+
 </div>

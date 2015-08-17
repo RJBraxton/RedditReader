@@ -25,14 +25,19 @@ angular.module( 'ngBoilerplate.user', [
  * And of course we define a controller for our route.
  */
 .controller( 'UserCtrl', function UserCtrl( $scope, $stateParams, redditQuery, $rootScope) {
-  $rootScope.pageTitle = $stateParams.username + " | RedditReader";
+  $rootScope.pageTitle = "/u/" + $stateParams.username + " | RedditReader";
+  $scope.loading = 2;
+
+  $scope.moment = moment;
 
   redditQuery.getUserAbout($stateParams.username).then(function(res) {
     $scope.userAbout = res;
+    $scope.loading--;
   });
 
   redditQuery.getUserOverview($stateParams.username).then(function(res) {
     $scope.userOverview = res;
+    $scope.loading--;
     console.log(res);
   });
 });

@@ -20,13 +20,17 @@ angular.module( 'ngBoilerplate.feed', [
 
 .controller( 'FeedCtrl', function FeedCtrl( $scope,  $stateParams, redditQuery, $rootScope ) {
   $rootScope.pageTitle = "/r/" + $stateParams.subreddit + " | RedditReader";
+  $scope.loading = true;
 
   $scope.subreddit = $stateParams.subreddit;
   
 
+  $scope.moment = moment;
+
   $scope.subreddit = $stateParams.subreddit;
     redditQuery.searchLinks($scope.subreddit).then(function(res) {
       $scope.posts = res;
-      // console.log(res);
+      $scope.loading = false;
+      console.log(res);
     });
 });

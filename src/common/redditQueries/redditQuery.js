@@ -6,10 +6,16 @@ angular.module( 'redditQuery', [] )
 	var baseURLr = 'http://www.reddit.com/r/';
 	var baseURLu = 'http://www.reddit.com/user/';
 
+	//Elias Zamaria - http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
 	var rq = {
 		searchLinks: function(subreddit) {
 			var url = baseURLr + subreddit + '/hot.json';
 			return $http.get(url).then(function(res) {
+				console.log(res);
 				return res.data.data.children;
 			});
 		}, 
@@ -41,33 +47,34 @@ angular.module( 'redditQuery', [] )
 						for (var i = 0; i < comment.replies.data.children.length; i++) {
 							if (comment.replies.data.children[i].kind !== "more") { //No "more comments"
 								nextComment.children.push(insertComment(comment.replies.data.children[i]));
-							}
 						}
 					}
-					return nextComment;
-				} 
-				
-			}
-			for (var i = 0; i < commentBlock.data[1].data.children.length; i++) {
-				sorted.push(insertComment(commentBlock.data[1].data.children[i]));
-			}
-			return sorted;
-		},
-		getUserAbout: function(username) {
-			return $http.get(baseURLu + username + "/about.json").then(function(res) {
-				res = res.data.data;
-				// res.comment_karma = ;
-				// res.linkKarma = ; 
-				res.created = moment.unix(res.created).fromNow();
-				return res;
-			});
-		},
-		getUserOverview: function(username) {
-			return $http.get(baseURLu + username + "/overview.json").then(function(res) {
-				res = res.data.data.children;
-				return res;
-			});
+				}
+				return nextComment;
+			} 
+
 		}
-	};
-	return rq;
+		for (var i = 0; i < commentBlock.data[1].data.children.length; i++) {
+			sorted.push(insertComment(commentBlock.data[1].data.children[i]));
+		}
+		return sorted;
+	},
+	getUserAbout: function(username) {
+		return $http.get(baseURLu + username + "/about.json").then(function(res) {
+			res = res.data.data;
+				res.comment_karma = numberWithCommas(res.comment_karma);
+				res.linkKarma = numberWithCommas(res.link_karma); 
+				res.createdSince = moment.unix(res.created).fromNow();
+				res.createdDate = moment.unix(res.created).format("MMM Do YYYY");
+				return res;
+			});
+	},
+	getUserOverview: function(username) {
+		return $http.get(baseURLu + username + "/overview.json").then(function(res) {
+			res = res.data.data.children;
+			return res;
+		});
+	}
+};
+return rq;
 });

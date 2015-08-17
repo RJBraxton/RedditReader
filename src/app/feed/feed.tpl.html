@@ -1,12 +1,29 @@
-<div class="row">
-<input ng-model="subreddit"></input><button class="btn" ng-click="submit()">SUBMIT</button>
-	<div class="panel panel-default" ng-class="{'panel-danger': post.data.over_18}" ng-repeat="post in posts">
-		<div class="panel-heading">
-			<span class="label label-primary">{{post.data.score}}</span><span ng-if="post.data.gilded > 0" class="label label-warning">x {{post.data.gilded}}</span> - <a ng-href="{{post.data.url}}">{{post.data.title}}</a>
-		</div>
-		<div class="panel-body">
-		<img class="feed-img" align="left" ng-src="{{post.data.preview.images[0].source.url}}">
-		<p> <a href ui-sref="comments({subreddit: subreddit, articleID: post.data.id})">{{post.data.num_comments}} comments</a>, Submitted by <a ui-sref="user({username: post.data.author})">{{post.data.author}}</a></p>
-			<p>Domain = {{post.data.domain}}</p>
+<div class="row" ng-show="loading">
+	<div class="text-center">
+		<h1><i class="fa fa-spinner fa-5x fa-spin"></i></h1>
 	</div>
 </div>
+
+<div class="row" ng-show="!loading">
+	<h1>/r/{{subreddit}}</h1>	
+	<hr/>
+	<div class="panel panel-default" ng-repeat="post in posts">
+		<div class="panel-heading">
+			<h3>
+				<i ng-if="post.data.stickied" class="fa fa-thumb-tack text-primary"></i> 
+				<span class="label label-primary">{{post.data.score}}</span> 
+				<span ng-if="post.data.gilded > 0" class="label label-warning">x {{post.data.gilded}}</span> - 
+				<a class="post-title" ng-if="!post.data.is_self" ng-href="{{post.data.url}}">{{post.data.title}}</a>
+				<a ng-if="post.data.is_self" ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.id})">{{post.data.title}}</a> 
+				<small>({{post.data.domain}})</small>
+				<span ng-if="post.data.over_18" class="label label-danger">NSFW</span>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<img class="feed-img" align="left" ng-if="!post.data.over_18" ng-src="{{post.data.preview.images[0].source.url}}">
+			<p>
+				<a href ui-sref="comments({subreddit: subreddit, articleID: post.data.id})">{{post.data.num_comments}} comments</a>, Submitted by <a ui-sref="user({username: post.data.author})">{{post.data.author}}</a> {{moment.unix(post.data.created).fromNow()}}
+				<span ng-if="post.data.distinguished == 'moderator'" class="label label-warning">M</span>
+			</p>
+		</div>
+	</div>

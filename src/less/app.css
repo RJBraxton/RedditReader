@@ -3,3 +3,28 @@
 	max-height: 100px;
 	padding-right: 10px;
 }
+
+.sidebar-input {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.panel-default .post-comment {
+	margin-bottom: 5px;
+}
+
+.post-title {
+	line-height: normal;
+}
+
+/* This is for the fixed navbar. */
+body { padding-top: 70px; }
+
+nav.navbar-fixed-top {
+	margin-top: 0px;
+}
+
+.navbar-form .form-control {
+	width: 150px;
+}
