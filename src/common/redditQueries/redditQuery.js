@@ -36,7 +36,7 @@ angular.module( 'redditQuery', [] )
 				if (comment.body) { //No blank comments
 					var nextComment = {};
 					nextComment.author = comment.author;
-					nextComment.created_utc = moment(comment.created_utc).fromNow();
+					nextComment.created_utc = moment.utc(comment.created_utc, "X").fromNow();
 					nextComment.gilded = comment.gilded;
 					nextComment.author = comment.author;
 					if (!comment.score_hidden) {nextComment.score = comment.score;}
@@ -59,13 +59,19 @@ angular.module( 'redditQuery', [] )
 		}
 		return sorted;
 	},
+	processText: function(content) {
+		// content = content.replace(/\*\*/g)
+		content = content.replace('&gt;', '>');
+		content = content.replace('&lt;', '<');
+		return content;
+	},
 	getUserAbout: function(username) {
 		return $http.get(baseURLu + username + "/about.json").then(function(res) {
 			res = res.data.data;
 				res.comment_karma = numberWithCommas(res.comment_karma);
 				res.linkKarma = numberWithCommas(res.link_karma); 
-				res.createdSince = moment.unix(res.created).fromNow();
-				res.createdDate = moment.unix(res.created).format("MMM Do YYYY");
+				res.createdSince = moment.utc(res.created_utc, "X").fromNow();
+				res.createdDate = moment.utc(res.created_utc, "X").format("MMM Do YYYY");
 				return res;
 			});
 	},

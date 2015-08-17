@@ -6,13 +6,12 @@
 <div class="row" ng-show="!loading">
 	<h1><a ui-sref="feed({subreddit: post.subreddit})"><i class="fa fa-border fa-chevron-circle-right"></i></a> /r/{{post.subreddit}}</h1>
 	<div class="well">
-		<div class="">
-			<img class="feed-img" align="left" ng-src="{{post.preview.images[0].source.url}}">
+			<img class="feed-img img-responsive" align="left" ng-src="{{post.preview.images[0].source.url}}">
+			<span ng-if="post.over_18" class="label label-danger">NSFW</span>
 			<h2>
 				<a ng-if="!post.is_self" ng-href="{{post.url}}">{{post.title}}</a><text ng-if="post.is_self" <text ng-if="post.is_self">{{post.title}}</text><small> Submitted by <a ui-sref="user({username: post.author})">{{post.author}}</a></small>
 			</h2>
 			<p ng-if="post.selftext"><i class="fa fa-quote-left fa-3x fa-pull-left fa-border"></i>{{post.selftext}}</p>
-		</div>
 	</div>
 </div>
 <div class="row">

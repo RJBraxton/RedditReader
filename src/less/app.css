@@ -27,4 +27,5 @@ nav.navbar-fixed-top {
 
 .navbar-form .form-control {
 	width: 150px;
+	display: inline;
 }

@@ -24,7 +24,7 @@ angular.module( 'ngBoilerplate', [
   });
 
   $scope.subredditSearch = function () {
-    $state.go('feed', {subreddit: $scope.subredditSearchText });
+    $state.go('feed', {subreddit: $scope.subredditSearchText});
     $scope.subredditSearchText = '';
     $scope.userSearchText = '';
   };

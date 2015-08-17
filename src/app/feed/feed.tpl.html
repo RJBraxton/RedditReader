@@ -22,8 +22,7 @@
 		<div class="panel-body">
 			<img class="feed-img" align="left" ng-if="!post.data.over_18" ng-src="{{post.data.preview.images[0].source.url}}">
 			<p>
-				<a href ui-sref="comments({subreddit: subreddit, articleID: post.data.id})">{{post.data.num_comments}} comments</a>, Submitted by <a ui-sref="user({username: post.data.author})">{{post.data.author}}</a> {{moment.unix(post.data.created).fromNow()}}
-				<span ng-if="post.data.distinguished == 'moderator'" class="label label-warning">M</span>
+				<a href ui-sref="comments({subreddit: subreddit, articleID: post.data.id})">{{post.data.num_comments}} comments</a>, Submitted by <a ui-sref="user({username: post.data.author})">{{post.data.author}}</a> <span ng-if="post.data.distinguished == 'moderator'" class="label label-warning">M</span> {{moment.utc(post.data.created_utc, "X").fromNow()}}
 			</p>
 		</div>
 	</div>

@@ -33,12 +33,12 @@ angular.module( 'ngBoilerplate.user', [
   redditQuery.getUserAbout($stateParams.username).then(function(res) {
     $scope.userAbout = res;
     $scope.loading--;
+    console.log(res);
   });
 
   redditQuery.getUserOverview($stateParams.username).then(function(res) {
     $scope.userOverview = res;
     $scope.loading--;
-    console.log(res);
   });
 });
 
