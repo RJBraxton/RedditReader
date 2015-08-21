@@ -28,9 +28,8 @@ angular.module( 'ngBoilerplate.feed', [
   $scope.moment = moment;
 
   $scope.subreddit = $stateParams.subreddit;
-    redditQuery.searchLinks($scope.subreddit).then(function(res) {
-      $scope.posts = res;
-      $scope.loading = false;
-      console.log(res);
-    });
+  redditQuery.searchLinks($scope.subreddit).then(function(res) {
+    $scope.posts = res;
+    $scope.loading = false;
+  });
 });

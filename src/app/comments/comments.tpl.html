@@ -9,7 +9,8 @@
 			<img class="feed-img img-responsive" align="left" ng-src="{{post.preview.images[0].source.url}}">
 			<span ng-if="post.over_18" class="label label-danger">NSFW</span>
 			<h2>
-				<a ng-if="!post.is_self" ng-href="{{post.url}}">{{post.title}}</a><text ng-if="post.is_self" <text ng-if="post.is_self">{{post.title}}</text><small> Submitted by <a ui-sref="user({username: post.author})">{{post.author}}</a></small>
+				<i ng-if="post.stickied" class="fa fa-thumb-tack text-primary"></i>
+				<span class="label label-primary">{{post.score}}</span> <a ng-if="!post.is_self" ng-href="{{post.url}}">{{post.title}}</a><text ng-if="post.is_self" <text ng-if="post.is_self">{{post.title}}</text><small> Submitted by <a ui-sref="user({username: post.author})">{{post.author}}</a></small>
 			</h2>
 			<p ng-if="post.selftext"><i class="fa fa-quote-left fa-3x fa-pull-left fa-border"></i>{{post.selftext}}</p>
 	</div>
@@ -17,19 +18,19 @@
 <div class="row">
 	<div class="panel panel-default post-comment" ng-repeat="comment in comments">
 		<div class="panel-body">
-			<p><span class="label" ng-class="{'label-danger': comment.score < 0, 'label-primary': comment.score > 0, 'label-default': comment.score == 0}">{{comment.score}}</span> <span ng-if="comment.gilded > 0" class="label label-warning">x {{comment.gilded}}</span> <a ui-sref="user({username:comment.author})">{{comment.author}}</a></p>
+			<p><span class="label" ng-class="{'label-danger': comment.score < 0, 'label-primary': comment.score > 0, 'label-default': comment.score == 0}">{{comment.score}}</span> <span ng-if="comment.gilded > 0" class="label label-warning">x {{comment.gilded}}</span> <a ng-class="{'label label-warning': comment.author == post.author}" ui-sref="user({username:comment.author})">{{comment.author}}</a> {{comment.created_utc}}</p>
 			{{comment.body}}
 			<div class="panel panel-default post-comment" ng-repeat="child1 in comment.children">
 				<div class="panel-body">
-					<p><span class="label" ng-class="{'label-danger': child1.score < 0, 'label-primary': child1.score > 0, 'label-default': child1.score == 0}">{{child1.score}}</span> <span ng-if="child1.gilded > 0" class="label label-warning">x {{child1.gilded}}</span> <a ui-sref="user({username:child1.author})">{{child1.author}}</a></p>
+					<p><span class="label" ng-class="{'label-danger': child1.score < 0, 'label-primary': child1.score > 0, 'label-default': child1.score == 0}">{{child1.score}}</span> <span ng-if="child1.gilded > 0" class="label label-warning">x {{child1.gilded}}</span> <a ng-class="{'label label-warning': child1.author == post.author}" ui-sref="user({username:child1.author})">{{child1.author}}</a> {{child1.created_utc}}</p>
 					{{child1.body}}
 					<div class="panel panel-default post-comment" ng-repeat="child2 in child1.children">
 						<div class="panel-body">
-							<p><span class="label" ng-class="{'label-danger': child2.score < 0, 'label-primary': child2.score > 0, 'label-default': child2.score == 0}">{{child2.score}}</span> <span ng-if="child2.gilded > 0" class="label label-warning">x {{child2.gilded}}</span> <a ui-sref="user({username:child2.author})">{{child2.author}}</a></p>
+							<p><span class="label" ng-class="{'label-danger': child2.score < 0, 'label-primary': child2.score > 0, 'label-default': child2.score == 0}">{{child2.score}}</span> <span ng-if="child2.gilded > 0" class="label label-warning">x {{child2.gilded}}</span> <a ng-class="{'label label-warning': child2.author == post.author}" ui-sref="user({username:child2.author})">{{child2.author}}</a> {{child2.created_utc}}</p>
 							{{child2.body}}
 							<div class="panel panel-default post-comment" ng-repeat="child3 in child2.children">
 								<div class="panel-body">
-									<p><span class="label" ng-class="{'label-danger': child3.score < 0, 'label-primary': child3.score > 0, 'label-default': child3.score == 0}">{{child3.score}}</span> <span ng-if="child3.gilded > 0" class="label label-warning">x {{child3.gilded}}</span> <a ui-sref="user({username:child3.author})">{{child3.author}}</a></p>
+									<p><span class="label" ng-class="{'label-danger': child3.score < 0, 'label-primary': child3.score > 0, 'label-default': child3.score == 0}">{{child3.score}}</span> <span ng-if="child3.gilded > 0" class="label label-warning">x {{child3.gilded}}</span> <a ng-class="{'label label-warning': child3.author == post.author}" ui-sref="user({username:child3.author})">{{child3.author}}</a> {{child3.created_utc}}</p>
 									{{child3.body}}
 								</div>
 							</div>

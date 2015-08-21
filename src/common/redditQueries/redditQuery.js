@@ -1,6 +1,9 @@
 angular.module( 'redditQuery', [] )
 
-.factory( 'redditQuery', function($http) {
+.factory( 'redditQuery', function($http, $cacheFactory, $q) {
+
+	var postCache = $cacheFactory('posts');
+	var commentCache = $cacheFactory('comments');
 
 	//Vars
 	var baseURLr = 'http://www.reddit.com/r/';
@@ -13,21 +16,47 @@ angular.module( 'redditQuery', [] )
 
 	var rq = {
 		searchLinks: function(subreddit) {
-			var url = baseURLr + subreddit + '/hot.json';
-			return $http.get(url).then(function(res) {
-				console.log(res);
-				return res.data.data.children;
-			});
+
+			//Have we been to this sub before in this session? If so, use the cache.
+			var data = postCache.get(subreddit);
+
+			if (data) {
+				//Cache being used. Returning a promise.
+				var cachePromise = $q.defer();
+				cachePromise.resolve(data.data.data.children);
+				return cachePromise.promise;
+			} else {
+				//Cache not being used.
+				var url = baseURLr + subreddit + '/hot.json';
+				return $http.get(url).then(function(res) {
+					postCache.put(subreddit, res);
+					return res.data.data.children;
+				});
+			}
+
+
 		}, 
 		searchComments: function(subreddit, articleID) {
-			var url = baseURLr + subreddit + '/comments/' + articleID + '.json';
-			return $http.get(url).then(function(res) {
-				console.log(res);
-				return {
-					comments: rq.processComments(res),
-					post: res.data[0].data.children[0].data
-				};
-			});
+
+			var data = commentCache.get(subreddit + articleID);
+
+			if (data) {
+				console.log('cache used');
+				console.log(data);
+				var cachePromise = $q.defer();
+				cachePromise.resolve(data);
+				return cachePromise.promise;
+			} else{
+				var url = baseURLr + subreddit + '/comments/' + articleID + '.json';
+				return $http.get(url).then(function(res) {
+					var results = {
+						comments: rq.processComments(res),
+						post: res.data[0].data.children[0].data
+					};
+					commentCache.put(subreddit + articleID, results);
+					return results;
+				});
+			}			
 		},
 		processComments: function(commentBlock) {
 			var sorted = [];
@@ -68,12 +97,12 @@ angular.module( 'redditQuery', [] )
 	getUserAbout: function(username) {
 		return $http.get(baseURLu + username + "/about.json").then(function(res) {
 			res = res.data.data;
-				res.comment_karma = numberWithCommas(res.comment_karma);
-				res.linkKarma = numberWithCommas(res.link_karma); 
-				res.createdSince = moment.utc(res.created_utc, "X").fromNow();
-				res.createdDate = moment.utc(res.created_utc, "X").format("MMM Do YYYY");
-				return res;
-			});
+			res.comment_karma = numberWithCommas(res.comment_karma);
+			res.linkKarma = numberWithCommas(res.link_karma); 
+			res.createdSince = moment.utc(res.created_utc, "X").fromNow();
+			res.createdDate = moment.utc(res.created_utc, "X").format("MMM Do YYYY");
+			return res;
+		});
 	},
 	getUserOverview: function(username) {
 		return $http.get(baseURLu + username + "/overview.json").then(function(res) {
