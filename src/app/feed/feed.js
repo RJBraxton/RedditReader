@@ -19,14 +19,9 @@ angular.module( 'ngBoilerplate.feed', [
 })
 
 .controller( 'FeedCtrl', function FeedCtrl( $scope,  $stateParams, redditQuery, $rootScope ) {
-  console.log($.inArray($stateParams.subreddit, $scope.$parent.history));
+  //If we haven't been to this sub in recent history
   if ($.inArray($stateParams.subreddit, $scope.$parent.history) <= -1) {
-    if ($scope.$parent.history.length = 10) {
-      $scope.$parent.history.shift();
       $scope.$parent.history.push($stateParams.subreddit);
-    } else{
-      $scope.$parent.history.push($stateParams.subreddit);
-    }
   }
 
   $rootScope.pageTitle = "/r/" + $stateParams.subreddit + " | RedditReader";

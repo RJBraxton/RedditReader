@@ -50,10 +50,10 @@
       <div class="collapse navbar-collapse" id="topNav">
         <ul class="nav navbar-nav">
           <li><a ui-sref="about"><i class="fa fa-info-circle fa-lg"></i></a></li>
-          <li ng-if="history.length > 0" class="dropdown">
+          <li ng-if="history.length > 1" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">History <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li ng-repeat="sub in history track by $index | limitTo:10" ng-if="sub"><a ui-sref="feed({subreddit: sub})">{{sub}}</a></li>
+              <li ng-repeat="sub in history.slice().reverse() | limitTo: 10" ng-if="sub"><a ui-sref="feed({subreddit: sub})"><i class="fa fa-angle-double-right"></i> /r/{{sub}}</a></li>
             </ul>
           </li>
         </ul>

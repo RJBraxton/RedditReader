@@ -1,6 +1,6 @@
 angular.module( 'redditQuery', [] )
 
-.factory( 'redditQuery', function($http, $cacheFactory, $q) {
+.factory( 'redditQuery', function($http, $cacheFactory, $q, $sce) {
 
 	var postCache = $cacheFactory('posts');
 	var commentCache = $cacheFactory('comments');
@@ -66,7 +66,7 @@ angular.module( 'redditQuery', [] )
 					nextComment.gilded = comment.gilded;
 					nextComment.author = comment.author;
 					if (!comment.score_hidden) {nextComment.score = comment.score;}
-					nextComment.body = comment.body;
+					nextComment.body = (comment.body_html.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '\"'));
 					nextComment.edited = comment.edited;
 					if(comment.replies) {
 						nextComment.children = [];

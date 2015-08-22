@@ -1,3 +1,5 @@
+<div ng-bind-html="htmltest"></div>
+
 <div class="row" ng-show="loading">
 	<div class="text-center">
 		<h1><i class="fa fa-spinner fa-5x fa-spin"></i></h1>
@@ -19,19 +21,19 @@
 	<div class="panel panel-default post-comment" ng-repeat="comment in comments">
 		<div class="panel-body">
 			<p><span class="label" ng-class="{'label-danger': comment.score < 0, 'label-primary': comment.score > 0, 'label-default': comment.score == 0}">{{comment.score}}</span> <span ng-if="comment.gilded > 0" class="label label-warning">x {{comment.gilded}}</span> <a ng-class="{'label label-warning': comment.author == post.author}" ui-sref="user({username:comment.author})">{{comment.author}}</a> {{comment.created_utc}}</p>
-			{{comment.body}}
+			<p ng-bind-html="comment.body"></p>
 			<div class="panel panel-default post-comment" ng-repeat="child1 in comment.children">
 				<div class="panel-body">
 					<p><span class="label" ng-class="{'label-danger': child1.score < 0, 'label-primary': child1.score > 0, 'label-default': child1.score == 0}">{{child1.score}}</span> <span ng-if="child1.gilded > 0" class="label label-warning">x {{child1.gilded}}</span> <a ng-class="{'label label-warning': child1.author == post.author}" ui-sref="user({username:child1.author})">{{child1.author}}</a> {{child1.created_utc}}</p>
-					{{child1.body}}
+					<p ng-bind-html="child1.body"></p>
 					<div class="panel panel-default post-comment" ng-repeat="child2 in child1.children">
 						<div class="panel-body">
 							<p><span class="label" ng-class="{'label-danger': child2.score < 0, 'label-primary': child2.score > 0, 'label-default': child2.score == 0}">{{child2.score}}</span> <span ng-if="child2.gilded > 0" class="label label-warning">x {{child2.gilded}}</span> <a ng-class="{'label label-warning': child2.author == post.author}" ui-sref="user({username:child2.author})">{{child2.author}}</a> {{child2.created_utc}}</p>
-							{{child2.body}}
+							<p ng-bind-html="child2.body"></p>
 							<div class="panel panel-default post-comment" ng-repeat="child3 in child2.children">
 								<div class="panel-body">
 									<p><span class="label" ng-class="{'label-danger': child3.score < 0, 'label-primary': child3.score > 0, 'label-default': child3.score == 0}">{{child3.score}}</span> <span ng-if="child3.gilded > 0" class="label label-warning">x {{child3.gilded}}</span> <a ng-class="{'label label-warning': child3.author == post.author}" ui-sref="user({username:child3.author})">{{child3.author}}</a> {{child3.created_utc}}</p>
-									{{child3.body}}
+									<p ng-bind-html="child3.body"></p>
 								</div>
 							</div>
 						</div>

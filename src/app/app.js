@@ -1,6 +1,7 @@
 angular.module( 'ngBoilerplate', [
   'templates-app',
   'templates-common',
+  'ngSanitize',
   'ngBoilerplate.home',
   'ngBoilerplate.about',
   'ngBoilerplate.feed',
