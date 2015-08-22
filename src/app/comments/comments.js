@@ -26,7 +26,6 @@ angular.module( 'ngBoilerplate.comments', [
     $scope.post = res.post;
     $rootScope.pageTitle = res.post.title + " | RedditReader";  
     $scope.loading = false;
-    console.log(res);
   });  
 
 });

@@ -35,6 +35,8 @@ angular.module( 'ngBoilerplate', [
     $scope.userSearchText = '';
   };
 
+  $scope.history = [];
+
 })
 
 ;

@@ -22,7 +22,7 @@
 
       <div ng-if="post.data.body" class="panel-heading">
         <h4>
-          <span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.link_id.slice(3)})">{{post.data.link_title}}</a><small> /r/{{post.data.subreddit}} {{moment.unix(post.data.created).fromNow()}}</small>
+          <span class="label" ng-class="{'label-danger': post.data.score < 0, 'label-primary': post.data.score > 0, 'label-default': post.data.score == 0}">{{post.data.score}}</span> - <a ui-sref="comments({subreddit: post.data.subreddit, articleID: post.data.link_id.slice(3)})">{{post.data.link_title}}</a><small> /r/{{post.data.subreddit}} {{moment.utc(post.data.created_utc, "X").fromNow()}}</small>
         </h4>
       </div>
       <div ng-if="post.data.body" class="panel-body">

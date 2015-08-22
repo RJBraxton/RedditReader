@@ -41,8 +41,6 @@ angular.module( 'redditQuery', [] )
 			var data = commentCache.get(subreddit + articleID);
 
 			if (data) {
-				console.log('cache used');
-				console.log(data);
 				var cachePromise = $q.defer();
 				cachePromise.resolve(data);
 				return cachePromise.promise;
@@ -53,8 +51,7 @@ angular.module( 'redditQuery', [] )
 						comments: rq.processComments(res),
 						post: res.data[0].data.children[0].data
 					};
-					commentCache.put(subreddit + articleID, results);
-					return results;
+					return commentCache.put(subreddit + articleID, results);
 				});
 			}			
 		},
